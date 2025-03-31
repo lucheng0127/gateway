@@ -1,0 +1,17 @@
+[Unit]
+Description=Clash
+After=network.target
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+#User=clash
+ExecStart=/usr/local/bin/tproxy.sh start
+ExecStop=/usr/local/bin/tproxy.sh stop
+ExecReload=/usr/local/bin/tproxy.sh restart
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

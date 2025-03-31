@@ -1,0 +1,16 @@
+[Unit]
+Description=Gateway service enable tproxy
+After=network.target
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/opt/gateway/gateway.sh start
+ExecStop=/opt/gateway/gateway.sh destroy
+ExecReload=/opt/gateway/gateway.sh restart
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
