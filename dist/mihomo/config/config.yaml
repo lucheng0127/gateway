@@ -10,13 +10,31 @@ dns:
     ipv6: false
     listen: 0.0.0.0:5353 # Make sure port same as tproxy.sh
     enhanced-mode: fake-ip
+    fake-ip-range: 198.18.0.1/16
     nameserver:
-    - https://doh.pub/dns-query
-    - tls://120.53.53.53:853
-    - 8.8.8.8
-    - 223.5.5.5
-    - 10.28.64.9
-    fallback: [223.5.5.5]
+      - 223.5.5.5
+      - 114.114.114.114
+      - https://doh.pub/dns-query
+      - https://dns.alidns.com/dns-query
+    fallback:
+      - 1.1.1.1
+      - 208.67.222.222
+      - 8.8.8.8
+      - https://1.1.1.1/dns-query
+      - https://1.0.0.1/dns-query
+      - https://208.67.222.222/dns-query
+      - https://208.67.220.220/dns-query
+    fallback-filter:
+      geoip: true
+      geoip-code: CN
+      ipcidr:
+        - 240.0.0.0/4
+      domain:
+        - '+.google.com'
+        - '+.facebook.com'
+        - '+.youtube.com'
+        - '+.instagram.com'
+        - '+.linkedin.com'
 proxies:
 ...
 proxy-groups:

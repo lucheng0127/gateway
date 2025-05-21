@@ -52,8 +52,10 @@ create_iptables() {
     iptables -t nat -A clash_dns_external -p udp -m udp --dport 53 -j REDIRECT --to-ports 5353
 
     iptables -t nat -N clash_dns_local
-    iptables -t nat -A clash_dns_local -p udp -m udp --dport 53 -j REDIRECT --to-ports 5353
+    # XXX: Make sure clash traffic output correct, nor local dns lookup traffic will never work
+    #      So make clash traffic return as the first rule of clash_dns_local
     iptables -t nat -A clash_dns_local -m owner --uid-owner clash -j RETURN
+    iptables -t nat -A clash_dns_local -p udp -m udp --dport 53 -j REDIRECT --to-ports 5353
 
     iptables -t nat -A PREROUTING -p udp -j clash_dns_external
     iptables -t nat -A OUTPUT -p udp -j clash_dns_local
